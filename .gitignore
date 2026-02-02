@@ -33,3 +33,7 @@ __pycache__/
 
 # OS
 .DS_Store
+
+# Flask instance folder (local DB, secrets)
+backend/instance/
+instance/
