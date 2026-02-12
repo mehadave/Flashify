@@ -1,14 +1,9 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
-from .models import User
-from . import db
+from ..models import User
+from .. import db
 
 api = Blueprint("api", __name__)
-
-@api.get("/api/health")
-def health():
-    return jsonify(status="backend running")
-
 
 @api.post("/api/auth/signup")
 def signup():
@@ -34,9 +29,12 @@ def signup():
 
 @api.post("/api/auth/login")
 def login():
+    print()
     data = request.get_json(silent=True) or {}
     email = (data.get("email") or "").strip().lower()
     password = data.get("password") or ""
+
+    print(f"[LOGIN] Request data: email={email}, password={'*' * len(password)}")  # ✅ ADD
 
     if not email or not password:
         return jsonify(message="Email and password are required."), 400
